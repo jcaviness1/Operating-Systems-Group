@@ -1,2 +1,2 @@
 # Operating-Systems-Group
-OUr project for OS
+Our project for OS

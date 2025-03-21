@@ -2,12 +2,17 @@ import java.util.*;
 
 public class SchedulingAlgorithms {
 
+<<<<<<< HEAD
     // First-Come, First-Served (FCFS)
+=======
+    // FCFS Scheduling
+>>>>>>> 07c233dd81913eba104652422e1aa1cf7c421824
     public static void executeFCFS(List<Process> processes) {
         processes.sort(Comparator.comparingInt(p -> p.arrivalTime));
         int currentTime = 0;
 
         System.out.println("\nFirst-Come, First-Served (FCFS) Scheduling:");
+<<<<<<< HEAD
         List<String> ganttChart = new ArrayList<>();
         List<Integer> timeStamps = new ArrayList<>();
         timeStamps.add(0);
@@ -29,16 +34,32 @@ public class SchedulingAlgorithms {
     }
 
     // Shortest Job First (SJF)
+=======
+        for (Process p : processes) {
+            if (currentTime < p.arrivalTime)
+                currentTime = p.arrivalTime;
+            int waitingTime = currentTime - p.arrivalTime;
+            int turnaroundTime = waitingTime + p.burstTime;
+            currentTime += p.burstTime;
+            printProcessInfo(p, waitingTime, turnaroundTime);
+        }
+    }
+
+   // SJF Scheduling (Fixed Version)
+>>>>>>> 07c233dd81913eba104652422e1aa1cf7c421824
     public static void executeSJF(List<Process> processes) {
         processes.sort(Comparator.comparingInt(p -> p.arrivalTime));
         PriorityQueue<Process> readyQueue = new PriorityQueue<>(Comparator.comparingInt(p -> p.burstTime));
         int currentTime = 0, completed = 0, index = 0;
 
         System.out.println("\nShortest Job First (SJF) Scheduling:");
+<<<<<<< HEAD
         List<String> ganttChart = new ArrayList<>();
         List<Integer> timeStamps = new ArrayList<>();
         timeStamps.add(0);
 
+=======
+>>>>>>> 07c233dd81913eba104652422e1aa1cf7c421824
         while (completed < processes.size()) {
             while (index < processes.size() && processes.get(index).arrivalTime <= currentTime) {
                 readyQueue.add(processes.get(index));
@@ -46,6 +67,7 @@ public class SchedulingAlgorithms {
             }
             if (!readyQueue.isEmpty()) {
                 Process shortest = readyQueue.poll();
+<<<<<<< HEAD
                 shortest.waitingTime = currentTime - shortest.arrivalTime;
                 shortest.turnaroundTime = shortest.waitingTime + shortest.burstTime;
                 currentTime += shortest.burstTime;
@@ -54,10 +76,19 @@ public class SchedulingAlgorithms {
                 ganttChart.add("P" + shortest.pid);
                 timeStamps.add(currentTime);
                 printProcessInfo(shortest);
+=======
+                int waitingTime = currentTime - shortest.arrivalTime;
+                waitingTime = Math.max(waitingTime, 0);
+                int turnaroundTime = waitingTime + shortest.burstTime;
+                currentTime += shortest.burstTime;
+                completed++;
+                printProcessInfo(shortest, waitingTime, turnaroundTime);
+>>>>>>> 07c233dd81913eba104652422e1aa1cf7c421824
             } else {
                 currentTime++;
             }
         }
+<<<<<<< HEAD
 
         printGanttChart(ganttChart, timeStamps);
         printAverageTimes(processes);
@@ -93,5 +124,13 @@ public class SchedulingAlgorithms {
         double avgTAT = processes.stream().mapToInt(p -> p.turnaroundTime).average().orElse(0);
         System.out.printf("Average Waiting Time: %.2f%n", avgWT);
         System.out.printf("Average Turnaround Time: %.2f%n\n", avgTAT);
+=======
+    }
+
+    // Helper method to print process details
+    private static void printProcessInfo(Process p, int waitingTime, int turnaroundTime) {
+        System.out.printf("PID: %-4d | Waiting Time: %-4d | Turnaround Time: %-4d%n",
+                p.pid, waitingTime, turnaroundTime);
+>>>>>>> 07c233dd81913eba104652422e1aa1cf7c421824
     }
 }

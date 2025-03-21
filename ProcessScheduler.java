@@ -42,5 +42,9 @@ public class ProcessScheduler {
         for (Process p : processes) {
             System.out.printf("%-4d %-7d %-6d %-4d%n", p.pid, p.arrivalTime, p.burstTime, p.priority);
         }
+
+        // Call scheduling algorithms from SchedulingAlgorithms.java
+        SchedulingAlgorithms.executeFCFS(new ArrayList<>(processes));
+        SchedulingAlgorithms.executeSJF(new ArrayList<>(processes));
     }
 }
